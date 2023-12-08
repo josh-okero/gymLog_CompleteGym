@@ -72,4 +72,19 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainGymLogDisplay" />
+    <TextView
+        android:id="@+id/textView_admin"
+        android:layout_width="198dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:text="You are an Admin"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainSubmitButton"
+        tools:visibility="visible"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
