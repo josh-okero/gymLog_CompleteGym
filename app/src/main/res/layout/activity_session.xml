@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SessionActivity">
+
+
+    <Button
+        android:id="@+id/viewSessions"
+        android:layout_width="259dp"
+        android:layout_height="97dp"
+        android:text="@string/view_sessions"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="233dp" />
+
+    <Button
+        android:id="@+id/deleteSessions"
+        android:layout_width="287dp"
+        android:layout_height="141dp"
+        android:layout_marginTop="68dp"
+        android:text="@string/delete_all_sessions"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewSessions" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
