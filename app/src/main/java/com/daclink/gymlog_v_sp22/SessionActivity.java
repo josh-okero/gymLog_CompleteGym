@@ -6,12 +6,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -35,7 +38,7 @@ public class SessionActivity extends AppCompatActivity {
 
     private TextView msessionsOptionsDisplay;
 
-
+    private Button mAddSession;
     private Button mViewSessions;
 
     private Button mDeleteAllSessions;
@@ -50,12 +53,12 @@ public class SessionActivity extends AppCompatActivity {
 
     private User mUser;
 
+    private String  mSessionName;
+
     //Continue:
-    //Connect the session page to another page that creates a new session
-    //After that add a button to the screen once a session is created
-    //Add a button to add an exercise: This can take you to the main display view with a button
-    //Once it's added, you can display the current exercises for that session
-    //Implement delete sessions button
+
+    //Implement ViewAllSessions
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,7 @@ public class SessionActivity extends AppCompatActivity {
 
         mViewSessions = binding.viewSessions;
         mDeleteAllSessions = binding.deleteSessions;
+        mAddSession  = binding.addSession;
         //msessionsOptionsDisplay = binding.sessionOptionsDisplay;
 
         //mMainDisplay.setMovementMethod(new ScrollingMovementMethod());
@@ -96,21 +100,74 @@ public class SessionActivity extends AppCompatActivity {
                 .GymLogDAO();
         //refreshDisplay();
         //Continue: Once button is clicked it goes to another page with all sessions for the user
+        mAddSession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showSessionNameDialog();
+            }
+        });
         mViewSessions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent =  ViewSessionsActivity.IntentFactory(SessionActivity.this,mUserId);
+                startActivity(intent);
             }
         });
+
         mDeleteAllSessions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Implement
+                //Access the db and get all the gymLog for that user
+                mGymLogList = mGymLogDAO.getGymLogsByUserId(mUserId);
+                //Iterate through the list and delete the gymLog
+                for(GymLog gymLog: mGymLogList) {
+                    mGymLogDAO.delete(gymLog);
+                }
             }
         });
 
-
     }
+
+    private void showSessionNameDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter Session Name");
+
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                mSessionName = input.getText().toString();
+
+                if (mSessionName.trim().isEmpty()) {
+
+                    while(mSessionName.trim().isEmpty()) {
+                        Toast.makeText(SessionActivity.this, "Session Name cannot be empty", Toast.LENGTH_SHORT).show();
+
+                    }
+                } else {
+                    mSessionName = input.getText().toString();
+                    Intent intent = MainActivity.IntentFactory(getApplicationContext(),mUserId,mSessionName);
+                    startActivity(intent);
+                }
+            }
+        });
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            finish();
+        }
+    });
+
+            builder.show();
+}
+
 
 
     private void loginUser(int userId) {

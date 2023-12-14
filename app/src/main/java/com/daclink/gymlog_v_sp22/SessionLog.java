@@ -22,15 +22,14 @@ import androidx.room.Room;
 
 import com.daclink.gymlog_v_sp22.DB.AppDataBase;
 import com.daclink.gymlog_v_sp22.DB.GymLogDAO;
-import com.daclink.gymlog_v_sp22.databinding.ActivityAdminBinding;
-import com.daclink.gymlog_v_sp22.databinding.ActivityViewsessionsBinding;
+import com.daclink.gymlog_v_sp22.databinding.ActivitySessionlogBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ViewSessionsActivity extends AppCompatActivity {
+public class SessionLog extends AppCompatActivity {
     //ActivityMainBinding binding;
     private static final String USER_ID_KEY = "com.daclink.gymlog_v_sp22.userIdKey";
     private static final String PREFEENCES_KEY ="com.daclink.gymlog_v_sp22.PREFENCES_KEY" ;
@@ -38,7 +37,7 @@ public class ViewSessionsActivity extends AppCompatActivity {
     private List<GymLog> mGymLogs;
     private GymLogDAO mGymLogDAO;
 
-    ActivityViewsessionsBinding binding;
+    ActivitySessionlogBinding binding;
 
     private TextView mViewSessionsDisplay;
 
@@ -50,13 +49,14 @@ public class ViewSessionsActivity extends AppCompatActivity {
 
     private Menu menu;
 
+    private static int sessionID;
 
 
     //private List<GymLog> mGymLogList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_viewsessions);
+        setContentView(R.layout.activity_sessionlog);
 
 
 
@@ -64,12 +64,11 @@ public class ViewSessionsActivity extends AppCompatActivity {
         checkForUser();
         addUserToPreference(mUserId);
         loginUser(mUserId);
-        binding = ActivityViewsessionsBinding.inflate(getLayoutInflater());
+        binding = ActivitySessionlogBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //mMainDisplay = binding.AdminActivity;
-        mViewSessionsDisplay = binding.ViewSessionsActivity;
+        mViewSessionsDisplay = binding.sessionLogActivity;
 
-        displaySessions();
+        displayLogs();
 
 
         //addUserToPreference(mUserId);
@@ -117,55 +116,32 @@ public class ViewSessionsActivity extends AppCompatActivity {
     }
 
     //Implement code get all the users and display them in a button
-    public static Intent IntentFactory(Context context, int userId){
-        Intent intent = new Intent (context, ViewSessionsActivity.class);
+
+
+
+    public static Intent IntentFactory(Context context, int userId, int sessionId){
+        Intent intent = new Intent (context, SessionLog.class);
         intent.putExtra(USER_ID_KEY, userId);
+        sessionID = sessionId;
         return intent;
     }
 
 
 
-    private void displaySessions() {
+    private void displayLogs() {
 
-        LinearLayout buttonContainer = findViewById(R.id.buttonContainer);
+        LinearLayout buttonContainer = findViewById(R.id.sessionLogContainer);
 
-        mGymLogs= mGymLogDAO.getGymLogsByUserId(mUserId);
-
-        HashMap<Integer,GymLog> uniqueGymLogIDs = new HashMap<>();
-
+        mGymLogs= mGymLogDAO.getGymLogsBySessionId(sessionID);
 
         //Get unique session Id's
-        for(int i =0; i<mGymLogs.size();i++){
-            if(uniqueGymLogIDs.size()==0) uniqueGymLogIDs.put(mGymLogs.get(i).getSessionId(),mGymLogs.get(i));
-            else if(uniqueGymLogIDs.keySet().contains(mGymLogs.get(i).getSessionId())) continue;
-            else uniqueGymLogIDs.put(mGymLogs.get(i).getSessionId(),mGymLogs.get(i));
+        StringBuilder sb = new StringBuilder();
+        for (GymLog log : mGymLogs) {
+            sb.append(log.toString());
+            mViewSessionsDisplay.setText(sb.toString());
         }
 
-        // Iterate through the HashMap and display the session name of each gym log
-        for (Map.Entry<Integer, GymLog> gymLog: uniqueGymLogIDs.entrySet()){
-            // Create a new Button
-            Button button = new Button(this);
-            button.setBackgroundColor(3);
-
-            // Set button text (you can customize this)
-            button.setText(gymLog.getValue().getSessionName());
-            // Set an OnClickListener for the button (customize as needed)
-
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent =  SessionLog.IntentFactory(ViewSessionsActivity.this,mUserId,gymLog.getKey());
-                    startActivity(intent);
-                }
-            });
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            );
-            button.setLayoutParams(layoutParams);
-            buttonContainer.addView(button);
         }
-    }
 
     private void logoutUser(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
@@ -176,7 +152,7 @@ public class ViewSessionsActivity extends AppCompatActivity {
                 clearUserFromIntent();
                 clearUserFromPref();
                 mUserId = -1;
-                Intent intent = LoginActivity.IntentFactory(ViewSessionsActivity.this);
+                Intent intent = LoginActivity.IntentFactory(SessionLog.this);
                 startActivity(intent);
 
             }
@@ -242,8 +218,4 @@ public class ViewSessionsActivity extends AppCompatActivity {
         return  super.onPrepareOptionsMenu(menu);
     }
 }
-
-
-
-
 

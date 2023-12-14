@@ -21,7 +21,11 @@ public class GymLog {
 
     private int mUserId;
 
-    public GymLog(String exercise, double weight, int reps, int userId) {
+    private int mSessionId;
+
+    private String mSessionName;
+
+    public GymLog(String exercise, double weight, int reps, int userId,int sessionId, String sessionName) {
         mExercise = exercise;
         mWeight = weight;
         mReps = reps;
@@ -29,10 +33,30 @@ public class GymLog {
         mDate = new Date();
 
         mUserId = userId;
+
+        this.mSessionId = sessionId;
+
+        this.mSessionName = sessionName;
     }
 
     public int getUserId() {
         return mUserId;
+    }
+
+    public int getSessionId() {
+        return mSessionId;
+    }
+
+    public void setSessionId(int sessionId) {
+        mSessionId = sessionId;
+    }
+
+    public String getSessionName() {
+        return mSessionName;
+    }
+
+    public void setSessionName(String sessionName) {
+        mSessionName = sessionName;
     }
 
     public void setUserId(int userId) {
@@ -82,20 +106,20 @@ public class GymLog {
     }
     @Override
     public String toString() {
-//        return "Log #"+mLogId+ "\n" +
-//                "Exercise: "+mExercise+ "\n" +
-//                "Weight: "+mWeight+ "\n" +
-//                "Reps: "+mReps+ "\n" +
-//                "Date: "+mDate+ "\n" +
-//                "=-=-=-=-=-=-\n";
-
-        String output;
-
-        output = mExercise + " " + mWeight + " : "+ mReps;
-        output += "\n";
-        output += getDate();
-        output += "\n";
-        output += "userId == "+ mUserId;
-        return output;
+        return "Log #"+mLogId+ "\n" +
+                "Exercise: "+mExercise+ "\n" +
+                "Weight: "+mWeight+ "\n" +
+                "Reps: "+mReps+ "\n" +
+                "Date: "+mDate+ "\n" +
+                "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n";
+//
+//        String output;
+//
+//        output = mExercise + " " + mWeight + " : "+ mReps;
+//        output += "\n";
+//        output += getDate();
+//        output += "\n";
+//        output += "userId == "+ mUserId;
+//        return output;
     }
 }

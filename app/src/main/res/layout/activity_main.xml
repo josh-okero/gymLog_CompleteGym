@@ -72,6 +72,16 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainGymLogDisplay" />
+    <Button
+        android:id="@+id/endSessionButton"
+        android:layout_width="150dp"
+        android:layout_height="169dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/end_session"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainSubmitButton" />
     <TextView
         android:id="@+id/textView_admin"
         android:layout_width="198dp"

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "82c8742b8a4138868661a6555b908f62",
+    "identityHash": "4f6a3ff39196512f43a94c8ae8d62833",
     "entities": [
       {
         "tableName": "gymlog_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mLogId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mExercise` TEXT, `mWeight` REAL NOT NULL, `mReps` INTEGER NOT NULL, `mDate` INTEGER, `mUserId` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mLogId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mExercise` TEXT, `mWeight` REAL NOT NULL, `mReps` INTEGER NOT NULL, `mDate` INTEGER, `mUserId` INTEGER NOT NULL, `mSessionId` INTEGER NOT NULL, `mSessionName` TEXT)",
         "fields": [
           {
             "fieldPath": "mLogId",
@@ -43,6 +43,18 @@
             "columnName": "mUserId",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "mSessionId",
+            "columnName": "mSessionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mSessionName",
+            "columnName": "mSessionName",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -90,7 +102,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '82c8742b8a4138868661a6555b908f62')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4f6a3ff39196512f43a94c8ae8d62833')"
     ]
   }
 }

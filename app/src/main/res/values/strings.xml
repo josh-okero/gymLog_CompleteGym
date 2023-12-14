@@ -17,4 +17,5 @@
     <string name="complete_fitness">Complete Fitness</string>
     <string name="view_sessions">View Sessions</string>
     <string name="delete_all_sessions">Delete all sessions</string>
+    <string name="end_session">End Session</string>
 </resources>
