@@ -58,6 +58,7 @@ public class ViewSessionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewsessions);
 
+        //View session and display all sessions
 
 
         getDatabase();
@@ -214,13 +215,17 @@ public class ViewSessionsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_menu,menu);
-//        Menu menu = findViewById(R.menu.user_menu).getMen;
+        MenuItem backButton = menu.findItem(R.id.backButton);
+        if (backButton != null) {
+            backButton.setVisible(true);
+        }
         return true;
     }
     public  boolean onOptionsItemSelected(@NonNull MenuItem item){
         switch ((item.getItemId())){
-            case R.id.CheerMessage:
-                Toast.makeText(this, "Keep up the good work admin!.",Toast.LENGTH_SHORT).show();
+            case R.id.backButton:
+                Intent intent = SessionActivity.IntentFactory(getApplicationContext(),mUserId);
+                startActivity(intent);
                 return true;
             case R.id.userMenuLogout:
                 logoutUser();

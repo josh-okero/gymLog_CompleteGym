@@ -106,7 +106,7 @@ public class GymLog {
     }
     @Override
     public String toString() {
-        return "Log #"+mLogId+ "\n" +
+        return "Log ID#"+mLogId+ "\n" +
                 "Exercise: "+mExercise+ "\n" +
                 "Weight: "+mWeight+ "\n" +
                 "Reps: "+mReps+ "\n" +
