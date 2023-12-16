@@ -139,9 +139,8 @@ public class AdminActivity extends AppCompatActivity {
 //        }
 //    }
 
-
     private void displayUsers() {
-        //Continue: Implement log out button in xml
+        // Continue: Implement log out button in XML
         //
         //
         LinearLayout buttonContainer = findViewById(R.id.buttonContainer);
@@ -154,35 +153,83 @@ public class AdminActivity extends AppCompatActivity {
         for (int i = 0; i < numberOfButtons; i++) {
             // Create a new Button
             Button button = new Button(this);
-            button.setBackgroundColor(3);
+            button.setBackgroundResource(R.drawable.button_border); // Set the background to the border drawable
             User currentUser = mUserList.get(i);
             // Set button text (you can customize this)
             button.setText(currentUser.getUserName());
             // Set an OnClickListener for the button (customize as needed)
 
-                button.setOnClickListener(view -> {
-                    if(!currentUser.getUserName().equals("admin2")) {
-                        mUserList.remove(currentUser);
-                        mGymLogDAO.delete(currentUser);
+            button.setOnClickListener(view -> {
+                if (!currentUser.getUserName().equals("admin2")) {
+                    mUserList.remove(currentUser);
+                    mGymLogDAO.delete(currentUser);
 
-                        buttonContainer.removeView(button);
-                        buttonContainer.invalidate();
-                        // Handle button click event
-                        // Example: Toast.makeText(YourActivity.this, "Button " + (i + 1) + " clicked", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(this, "Cannot delete an admin user.", Toast.LENGTH_SHORT).show();
-                    }
-                    });
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    buttonContainer.removeView(button);
+                    buttonContainer.invalidate();
+
+                } else {
+                    Toast.makeText(this, "Cannot delete an admin user.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
-                    );
+            );
+            int marginInPixels = getResources().getDimensionPixelSize(R.dimen.button_margin); // Adjust the margin as needed
+            layoutParams.setMargins(marginInPixels, marginInPixels, marginInPixels, marginInPixels);
+
             button.setLayoutParams(layoutParams);
             buttonContainer.addView(button);
-            }
-            // Add the button to the LinearLayout
-
         }
+    }
+
+
+
+
+//    private void displayUsers() {
+//        //Continue: Implement log out button in xml
+//        //
+//        //
+//        LinearLayout buttonContainer = findViewById(R.id.buttonContainer);
+//
+//        mUserList = mGymLogDAO.getAllUsers();
+//        // Number of buttons you want to create
+//        int numberOfButtons = mUserList.size();
+//
+//        // Create buttons in a loop
+//        for (int i = 0; i < numberOfButtons; i++) {
+//            // Create a new Button
+//            Button button = new Button(this);
+//            button.setBackgroundColor(3);
+//            User currentUser = mUserList.get(i);
+//            // Set button text (you can customize this)
+//            button.setText(currentUser.getUserName());
+//            // Set an OnClickListener for the button (customize as needed)
+//
+//                button.setOnClickListener(view -> {
+//                    if(!currentUser.getUserName().equals("admin2")) {
+//                        mUserList.remove(currentUser);
+//                        mGymLogDAO.delete(currentUser);
+//
+//                        buttonContainer.removeView(button);
+//                        buttonContainer.invalidate();
+//                        // Handle button click event
+//                        // Example: Toast.makeText(YourActivity.this, "Button " + (i + 1) + " clicked", Toast.LENGTH_SHORT).show();
+//                    }else{
+//                        Toast.makeText(this, "Cannot delete an admin user.", Toast.LENGTH_SHORT).show();
+//                    }
+//                    });
+//                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+//                    ViewGroup.LayoutParams.MATCH_PARENT,
+//                    ViewGroup.LayoutParams.WRAP_CONTENT
+//                    );
+//            button.setLayoutParams(layoutParams);
+//            buttonContainer.addView(button);
+//            }
+//            // Add the button to the LinearLayout
+//
+//        }
 
     private void logoutUser(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);

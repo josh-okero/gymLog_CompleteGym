@@ -14,8 +14,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import android.widget.Toast;
@@ -32,7 +34,9 @@ import com.daclink.gymlog_v_sp22.databinding.ActivityMainBinding;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -340,6 +344,39 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+
+//private void refreshDisplay() {
+//    LinearLayout buttonContainer = findViewById(R.id.sessionLogContainer);
+//    mGymLogList = mGymLogDAO.getGymLogsBySessionId(mSessionId);
+//
+//    // Iterate through the HashMap and display the session name of each gym log
+//    if (!mGymLogList.isEmpty()) {
+//        for (GymLog log : mGymLogList) {
+//            // Create a new Button
+//            Button button = new Button(this);
+//            button.setBackgroundResource(R.drawable.button_border); // Set the background to the border drawable
+//
+//            // Set button text (you can customize this)
+//            button.setText(log.toString());
+//            // Set an OnClickListener for the button (customize as needed)
+//
+//            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+//                    ViewGroup.LayoutParams.MATCH_PARENT,
+//                    ViewGroup.LayoutParams.WRAP_CONTENT
+//            );
+//            int marginInPixels = getResources().getDimensionPixelSize(R.dimen.button_margin); // Adjust the margin as needed
+//            layoutParams.setMargins(marginInPixels, marginInPixels, marginInPixels, marginInPixels);
+//
+//            button.setLayoutParams(layoutParams);
+//            buttonContainer.addView(button);
+//        }
+//    }
+//    else {
+//               mMainDisplay.setText(R.string.no_logs_message);
+//            }
+//}
+
+
 
         @Override
         public boolean onCreateOptionsMenu(Menu menu) {

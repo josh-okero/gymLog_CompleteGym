@@ -123,6 +123,7 @@ public class SessionActivity extends AppCompatActivity {
                 for(GymLog gymLog: mGymLogList) {
                     mGymLogDAO.delete(gymLog);
                 }
+                Toast.makeText(SessionActivity.this, "All sessions have been deleted", Toast.LENGTH_SHORT).show();
             }
         });
 
