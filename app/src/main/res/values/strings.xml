@@ -18,4 +18,5 @@
     <string name="view_sessions">View Sessions</string>
     <string name="delete_all_sessions">Delete all sessions</string>
     <string name="end_session">End Session</string>
+    <string name="complete_gym">Complete Gym</string>
 </resources>

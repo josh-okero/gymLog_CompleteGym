@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,8 @@ public class SessionLog extends AppCompatActivity {
 
     private static int sessionID;
 
+    private TextView mMainDisplay;
+
 
     //private List<GymLog> mGymLogList;
     @Override
@@ -66,7 +69,7 @@ public class SessionLog extends AppCompatActivity {
         loginUser(mUserId);
         binding = ActivitySessionlogBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        mViewSessionsDisplay = binding.sessionLogActivity;
+        //mViewSessionsDisplay = binding.sessionLogContainer;
 
         displayLogs();
 
@@ -128,20 +131,86 @@ public class SessionLog extends AppCompatActivity {
 
 
 
-    private void displayLogs() {
+//    private void displayLogs() {
+//
+//        LinearLayout buttonContainer = findViewById(R.id.sessionLogContainer);
+//
+//        mGymLogs= mGymLogDAO.getGymLogsBySessionId(sessionID);
+//
+//        //Get unique session Id's
+//        StringBuilder sb = new StringBuilder();
+//        for (GymLog log : mGymLogs) {
+//            //sb.append(log.toString());
+//            //mViewSessionsDisplay.setText(sb.toString());
+//
+//            Button button = new Button(this);
+//            button.setBackgroundResource(R.drawable.button_border); // Set the background to the border drawable
+//
+//            button.setText("Session name: "+ log.getExercise()+" | Weight: "+ log.getWeight()+" | Repetitions:"+ log.getReps());
+//           // sb.append(log.toString());
+//
+//            // mViewSessionsDisplay.setText(sb.toString());
+//
+//            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+//                    ViewGroup.LayoutParams.MATCH_PARENT,
+//                    ViewGroup.LayoutParams.WRAP_CONTENT
+//            );
+//            int marginInPixels = getResources().getDimensionPixelSize(R.dimen.button_margin); // Adjust the margin as needed
+//            layoutParams.setMargins(marginInPixels, marginInPixels, marginInPixels, marginInPixels);
+//
+//            button.setLayoutParams(layoutParams);
+//            buttonContainer.addView(button);
+//        }
+//
+//        }
+private void displayLogs() {
 
-        LinearLayout buttonContainer = findViewById(R.id.sessionLogContainer);
+    ScrollView scrollView = findViewById(R.id.scrollView);
+    LinearLayout buttonContainer = findViewById(R.id.sessionLogContainer);
+    mGymLogs = mGymLogDAO.getGymLogsBySessionId(sessionID);
 
-        mGymLogs= mGymLogDAO.getGymLogsBySessionId(sessionID);
 
-        //Get unique session Id's
-        StringBuilder sb = new StringBuilder();
+    buttonContainer.removeAllViews();
+
+    if (!mGymLogs.isEmpty()) {
         for (GymLog log : mGymLogs) {
-            sb.append(log.toString());
-            mViewSessionsDisplay.setText(sb.toString());
+
+            Button button = new Button(this);
+            button.setBackgroundResource(R.drawable.button_border);
+
+            button.setText("Exercise: "+ log.getExercise()+"\n" +"Weight: "+ log.getWeight()+"\n" +"Repetitions:"+ log.getReps());
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            int marginInPixels = getResources().getDimensionPixelSize(R.dimen.button_margin); // Adjust the margin as needed
+            layoutParams.setMargins(marginInPixels, marginInPixels, marginInPixels, marginInPixels);
+
+            button.setLayoutParams(layoutParams);
+            buttonContainer.addView(button);
         }
 
-        }
+        // Scroll to the bottom after adding buttons
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
+    } else {
+        // Display a message in mMainDisplay
+        mMainDisplay.setText(R.string.no_logs_message);
+    }
+}
+
 
     private void logoutUser(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);

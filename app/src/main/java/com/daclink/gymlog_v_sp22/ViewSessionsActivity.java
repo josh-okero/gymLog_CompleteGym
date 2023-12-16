@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,7 +69,7 @@ public class ViewSessionsActivity extends AppCompatActivity {
         binding = ActivityViewsessionsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         //mMainDisplay = binding.AdminActivity;
-        mViewSessionsDisplay = binding.ViewSessionsActivity;
+        //mViewSessionsDisplay = binding.ViewSessionsActivity;
 
         displaySessions();
 
@@ -127,13 +128,13 @@ public class ViewSessionsActivity extends AppCompatActivity {
 
 
     private void displaySessions() {
+        ScrollView scrollView = findViewById(R.id.scrollView);
 
         LinearLayout buttonContainer = findViewById(R.id.buttonContainer);
 
         mGymLogs= mGymLogDAO.getGymLogsByUserId(mUserId);
 
         HashMap<Integer,GymLog> uniqueGymLogIDs = new HashMap<>();
-
 
         //Get unique session Id's
         for(int i =0; i<mGymLogs.size();i++){
@@ -146,27 +147,29 @@ public class ViewSessionsActivity extends AppCompatActivity {
         for (Map.Entry<Integer, GymLog> gymLog: uniqueGymLogIDs.entrySet()){
             // Create a new Button
             Button button = new Button(this);
-            button.setBackgroundColor(3);
+            button.setBackgroundResource(R.drawable.button_border); // Set the background to the border drawable
 
             // Set button text (you can customize this)
             button.setText(gymLog.getValue().getSessionName());
             // Set an OnClickListener for the button (customize as needed)
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent =  SessionLog.IntentFactory(ViewSessionsActivity.this,mUserId,gymLog.getKey());
-                    startActivity(intent);
-                }
+            button.setOnClickListener(view -> {
+                Intent intent =  SessionLog.IntentFactory(ViewSessionsActivity.this,mUserId,gymLog.getKey());
+                startActivity(intent);
             });
+
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
+            int marginInPixels = getResources().getDimensionPixelSize(R.dimen.button_margin); // Adjust the margin as needed
+            layoutParams.setMargins(marginInPixels, marginInPixels, marginInPixels, marginInPixels);
+
             button.setLayoutParams(layoutParams);
             buttonContainer.addView(button);
         }
     }
+
 
     private void logoutUser(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);

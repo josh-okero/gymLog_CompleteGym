@@ -106,20 +106,18 @@ public class GymLog {
     }
     @Override
     public String toString() {
-        return "Log ID#"+mLogId+ "\n" +
-                "Exercise: "+mExercise+ "\n" +
-                "Weight: "+mWeight+ "\n" +
-                "Reps: "+mReps+ "\n" +
+//        return "Log ID#"+mLogId+ "\n" +
+//                "Exercise: "+mExercise+ "\n" +
+//                "Weight: "+mWeight+ "\n" +
+//                "Reps: "+mReps+ "\n" +
+//                "Date: "+mDate+ "\n" +
+//                "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n";
+        return //"Log ID#"+mLogId+ "\n" +
                 "Date: "+mDate+ "\n" +
+                         "\n" +
+                "Exercise: "+mExercise+ " | " + "Weight: "+mWeight+ " | " + "Reps: "+mReps +"\n" +
+                        "\n" +
                 "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n";
-//
-//        String output;
-//
-//        output = mExercise + " " + mWeight + " : "+ mReps;
-//        output += "\n";
-//        output += getDate();
-//        output += "\n";
-//        output += "userId == "+ mUserId;
-//        return output;
+
     }
 }
