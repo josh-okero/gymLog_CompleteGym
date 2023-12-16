@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                         } else {
                             intent = SessionActivity.IntentFactory(getApplicationContext(),mUser.getUserId());
+
                             startActivity(intent);
                         }
                     }

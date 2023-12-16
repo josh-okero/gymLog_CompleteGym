@@ -21,11 +21,13 @@ public class GymLog {
 
     private int mUserId;
 
+
     private int mSessionId;
 
     private String mSessionName;
 
     public GymLog(String exercise, double weight, int reps, int userId,int sessionId, String sessionName) {
+
         mExercise = exercise;
         mWeight = weight;
         mReps = reps;
@@ -34,9 +36,11 @@ public class GymLog {
 
         mUserId = userId;
 
+
         this.mSessionId = sessionId;
 
         this.mSessionName = sessionName;
+
     }
 
     public int getUserId() {
@@ -58,6 +62,7 @@ public class GymLog {
     public void setSessionName(String sessionName) {
         mSessionName = sessionName;
     }
+
 
     public void setUserId(int userId) {
         mUserId = userId;
@@ -107,6 +112,7 @@ public class GymLog {
     @Override
     public String toString() {
         return "Log ID#"+mLogId+ "\n" +
+
                 "Exercise: "+mExercise+ "\n" +
                 "Weight: "+mWeight+ "\n" +
                 "Reps: "+mReps+ "\n" +
@@ -121,5 +127,6 @@ public class GymLog {
 //        output += "\n";
 //        output += "userId == "+ mUserId;
 //        return output;
+
     }
 }
