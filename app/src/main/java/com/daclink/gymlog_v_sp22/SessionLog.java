@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -21,53 +22,53 @@ import androidx.room.Room;
 
 import com.daclink.gymlog_v_sp22.DB.AppDataBase;
 import com.daclink.gymlog_v_sp22.DB.GymLogDAO;
-import com.daclink.gymlog_v_sp22.databinding.ActivityAdminBinding;
+import com.daclink.gymlog_v_sp22.databinding.ActivitySessionlogBinding;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-
-public class AdminActivity extends AppCompatActivity {
+public class SessionLog extends AppCompatActivity {
     //ActivityMainBinding binding;
     private static final String USER_ID_KEY = "com.daclink.gymlog_v_sp22.userIdKey";
     private static final String PREFEENCES_KEY ="com.daclink.gymlog_v_sp22.PREFENCES_KEY" ;
 
-    private List<User> mUserList;
+    private List<GymLog> mGymLogs;
     private GymLogDAO mGymLogDAO;
 
-    ActivityAdminBinding binding;
+    ActivitySessionlogBinding binding;
 
-    private TextView mMainDisplay;
+    private TextView mViewSessionsDisplay;
 
     int mUserId;
 
     User mUser;
 
-
-    private  SharedPreferences mPreferences = null;
+    private SharedPreferences mPreferences = null;
 
     private Menu menu;
 
+    private static int sessionID;
 
 
     //private List<GymLog> mGymLogList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_sessionlog);
+
 
 
         getDatabase();
         checkForUser();
         addUserToPreference(mUserId);
         loginUser(mUserId);
-
-        binding = ActivityAdminBinding.inflate(getLayoutInflater());
+        binding = ActivitySessionlogBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //mMainDisplay = binding.AdminActivity;
-        mMainDisplay = binding.AdminActivity;
+        mViewSessionsDisplay = binding.sessionLogActivity;
 
-
-        displayUsers();
+        displayLogs();
 
 
         //addUserToPreference(mUserId);
@@ -115,72 +116,30 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     //Implement code get all the users and display them in a button
-    public static Intent IntentFactory(Context context, int userId){
-        Intent intent = new Intent (context, AdminActivity.class);
-        intent.putExtra(USER_ID_KEY, userId);
 
+
+
+    public static Intent IntentFactory(Context context, int userId, int sessionId){
+        Intent intent = new Intent (context, SessionLog.class);
+        intent.putExtra(USER_ID_KEY, userId);
+        sessionID = sessionId;
         return intent;
     }
 
 
-//    private void displayUsers() {
-//        mUserList = mGymLogDAO.getAllUsers();
-//        //Continue: I'm able to attain all the values from the array but I don't know
-//        //via the code below, the next step is to figure out how to put them
-//        //in a button
-//        if (!mUserList.isEmpty()) {
-//            StringBuilder sb = new StringBuilder();
-//            for (User user : mUserList) {
-//                sb.append(user.getUserName());
-//            }
-//            mMainDisplay.setText(sb.toString());
-//        } else {
-//            mMainDisplay.setText("No users found");
-//        }
-//    }
 
+    private void displayLogs() {
 
-    private void displayUsers() {
-        //Continue: Implement log out button in xml
-        //
-        //
-        LinearLayout buttonContainer = findViewById(R.id.buttonContainer);
+        LinearLayout buttonContainer = findViewById(R.id.sessionLogContainer);
 
-        mUserList = mGymLogDAO.getAllUsers();
-        // Number of buttons you want to create
-        int numberOfButtons = mUserList.size();
+        mGymLogs= mGymLogDAO.getGymLogsBySessionId(sessionID);
 
-        // Create buttons in a loop
-        for (int i = 0; i < numberOfButtons; i++) {
-            // Create a new Button
-            Button button = new Button(this);
-            button.setBackgroundColor(3);
-            User currentUser = mUserList.get(i);
-            // Set button text (you can customize this)
-            button.setText(currentUser.getUserName());
-            // Set an OnClickListener for the button (customize as needed)
-
-                button.setOnClickListener(view -> {
-                    if(!currentUser.getUserName().equals("admin2")) {
-                        mUserList.remove(currentUser);
-                        mGymLogDAO.delete(currentUser);
-
-                        buttonContainer.removeView(button);
-                        buttonContainer.invalidate();
-                        // Handle button click event
-                        // Example: Toast.makeText(YourActivity.this, "Button " + (i + 1) + " clicked", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(this, "Cannot delete an admin user.", Toast.LENGTH_SHORT).show();
-                    }
-                    });
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                    );
-            button.setLayoutParams(layoutParams);
-            buttonContainer.addView(button);
-            }
-            // Add the button to the LinearLayout
+        //Get unique session Id's
+        StringBuilder sb = new StringBuilder();
+        for (GymLog log : mGymLogs) {
+            sb.append(log.toString());
+            mViewSessionsDisplay.setText(sb.toString());
+        }
 
         }
 
@@ -193,7 +152,7 @@ public class AdminActivity extends AppCompatActivity {
                 clearUserFromIntent();
                 clearUserFromPref();
                 mUserId = -1;
-                Intent intent = LoginActivity.IntentFactory(AdminActivity.this);
+                Intent intent = LoginActivity.IntentFactory(SessionLog.this);
                 startActivity(intent);
 
             }
@@ -232,11 +191,6 @@ public class AdminActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_menu,menu);
 //        Menu menu = findViewById(R.menu.user_menu).getMen;
-        MenuItem cheerMessageItem = menu.findItem(R.id.CheerMessage);
-
-        if (cheerMessageItem != null) {
-            cheerMessageItem.setVisible(true);
-        }
         return true;
     }
     public  boolean onOptionsItemSelected(@NonNull MenuItem item){
@@ -263,9 +217,5 @@ public class AdminActivity extends AppCompatActivity {
         }
         return  super.onPrepareOptionsMenu(menu);
     }
-
 }
-
-
-
 

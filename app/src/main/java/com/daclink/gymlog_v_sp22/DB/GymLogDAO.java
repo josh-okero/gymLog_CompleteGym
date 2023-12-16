@@ -36,6 +36,9 @@ public interface GymLogDAO {
     @Query("SELECT * FROM " + AppDataBase.GYMLOG_TABLE + " WHERE mUserId = :userId ORDER BY mDate desc")
     List<GymLog> getGymLogsByUserId(int userId);
 
+    @Query("SELECT * FROM " + AppDataBase.GYMLOG_TABLE+ " WHERE mSessionId= :sessionId")
+    List<GymLog> getGymLogsBySessionId(int sessionId);
+
     @Insert
     void insert(User...users);
 
@@ -54,4 +57,5 @@ public interface GymLogDAO {
 
     @Query("SELECT * FROM " + AppDataBase.USER_TABLE+ " WHERE mUserId= :userId")
     User getUserByUserId(int userId);
+
 }

@@ -9,6 +9,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GymLog_v_sp22">
         <activity
+
+            android:name=".SessionLog"
+            android:exported="true" />
+        <activity
+            android:name=".ViewSessionsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SessionActivity"
+            android:exported="true" />
+        <activity
+
             android:name=".LoginActivity"
             android:exported="false" />
         <activity

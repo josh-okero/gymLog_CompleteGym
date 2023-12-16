@@ -56,10 +56,11 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         Intent intent;
                         if (mUser.getUserName().equals("admin2")) {
-                            intent = AdminActivity.IntentFactory(getApplicationContext());
+                            intent = AdminActivity.IntentFactory(getApplicationContext(), mUser.getUserId());
                             startActivity(intent);
                         } else {
-                            intent = MainActivity.IntentFactory(getApplicationContext(), mUser.getUserId());
+                            intent = SessionActivity.IntentFactory(getApplicationContext(),mUser.getUserId());
+
                             startActivity(intent);
                         }
                     }
