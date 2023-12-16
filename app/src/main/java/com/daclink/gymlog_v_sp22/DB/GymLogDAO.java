@@ -38,6 +38,7 @@ public interface GymLogDAO {
 
     @Query("SELECT * FROM " + AppDataBase.GYMLOG_TABLE+ " WHERE mSessionId= :sessionId")
     List<GymLog> getGymLogsBySessionId(int sessionId);
+
     @Insert
     void insert(User...users);
 
