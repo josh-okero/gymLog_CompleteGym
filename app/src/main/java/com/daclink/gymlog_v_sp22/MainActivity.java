@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import android.text.InputType;
+
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
@@ -17,7 +19,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -27,6 +31,7 @@ import androidx.room.Room;
 import com.daclink.gymlog_v_sp22.DB.AppDataBase;
 import com.daclink.gymlog_v_sp22.DB.GymLogDAO;
 import com.daclink.gymlog_v_sp22.databinding.ActivityMainBinding;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String USER_ID_KEY = "com.daclink.gymlog_v_sp22.userIdKey";
     private static final String PREFEENCES_KEY = "com.daclink.gymlog_v_sp22.PREFENCES_KEY";
 
+
     ActivityMainBinding binding;
     private TextView mMainDisplay;
 
@@ -57,13 +63,16 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mSubmit;
 
+
     private Button mEndSession;
+
 
     private GymLogDAO mGymLogDAO;
 
     private List<GymLog> mGymLogList;
 
     private int mUserId = -1;
+
 
     private SharedPreferences mPreferences = null;
 
@@ -106,8 +115,10 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Intent intent = getIntent();
         if (intent != null) mSessionName = intent.getStringExtra("SESSION_NAME");
+
 
         getDatabase();
 
@@ -124,8 +135,10 @@ public class MainActivity extends AppCompatActivity {
         mWeight = binding.mainWeightEditText;
         mReps = binding.mainRepsEditText;
         mSubmit = binding.mainSubmitButton;
+
         mAdmin = binding.textViewAdmin;// previous assignment findViewById(R.id.textView_admin);
         mEndSession = binding.endSessionButton;
+
 
         mMainDisplay.setMovementMethod(new ScrollingMovementMethod());
 

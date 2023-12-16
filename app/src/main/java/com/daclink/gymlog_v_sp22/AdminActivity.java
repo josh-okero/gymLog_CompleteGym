@@ -42,6 +42,7 @@ public class AdminActivity extends AppCompatActivity {
 
     User mUser;
 
+
     private  SharedPreferences mPreferences = null;
 
     private Menu menu;
@@ -55,15 +56,16 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
 
 
-
         getDatabase();
         checkForUser();
         addUserToPreference(mUserId);
         loginUser(mUserId);
+
         binding = ActivityAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         //mMainDisplay = binding.AdminActivity;
         mMainDisplay = binding.AdminActivity;
+
 
         displayUsers();
 
@@ -116,6 +118,7 @@ public class AdminActivity extends AppCompatActivity {
     public static Intent IntentFactory(Context context, int userId){
         Intent intent = new Intent (context, AdminActivity.class);
         intent.putExtra(USER_ID_KEY, userId);
+
         return intent;
     }
 
@@ -307,6 +310,7 @@ public class AdminActivity extends AppCompatActivity {
         }
         return  super.onPrepareOptionsMenu(menu);
     }
+
 }
 
 
