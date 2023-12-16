@@ -4,4 +4,14 @@
     <string name="mainWeightHint">Enter Weight</string>
     <string name="mainRepsHint">Enter Reps</string>
     <string name="mainSubmitButton">Submit</string>
+    <string name="no_logs_message">No logs yet, time to hit the gym.</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="yes">Yes</string>
+    <string name="logout">Logout?</string>
+    <string name="no">No</string>
+    <string name="signup">Signup</string>
+    <string name="adminpage">AdminPage</string>
+    <string name="app_name_complete">Complete Fitness</string>
 </resources>
