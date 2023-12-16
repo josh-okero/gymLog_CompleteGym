@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/sessionLogActivity"
         android:layout_width="373dp"
-        android:layout_height="217dp"
+        android:layout_height="match_parent"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"

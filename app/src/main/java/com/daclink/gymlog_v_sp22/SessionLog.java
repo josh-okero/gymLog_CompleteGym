@@ -190,13 +190,18 @@ public class SessionLog extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_menu,menu);
+        MenuItem backButton = menu.findItem(R.id.backButton);
+        if (backButton != null) {
+            backButton.setVisible(true);
+        }
 //        Menu menu = findViewById(R.menu.user_menu).getMen;
         return true;
     }
     public  boolean onOptionsItemSelected(@NonNull MenuItem item){
         switch ((item.getItemId())){
-            case R.id.CheerMessage:
-                Toast.makeText(this, "Keep up the good work admin!.",Toast.LENGTH_SHORT).show();
+            case R.id.backButton:
+                Intent intent = ViewSessionsActivity.IntentFactory(getApplicationContext(),mUserId);
+                startActivity(intent);
                 return true;
             case R.id.userMenuLogout:
                 logoutUser();
